@@ -5,8 +5,6 @@ public class Receiver extends Thread {
 
     public Receiver(MessageBox messageBox) {
         this.messageBox = messageBox;
-        // FIXME update to USER thread with some logic of finishing
-        setDaemon(true);
     }
 
     public void setMessageBox(MessageBox messageBox) {
@@ -15,13 +13,13 @@ public class Receiver extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            try {
+        try {
+            while (true) {
                 String message = messageBox.take();
                 System.out.printf("Thread: %s, message: %s\n", getName(), message);
-            } catch (InterruptedException e) {
-
             }
+        } catch (InterruptedException e) {
+            // will exit from the cycle by interrupt
         }
     }
 }
